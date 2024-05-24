@@ -23,4 +23,29 @@ app.get('/personagem/:id', function (req, res) {
     const item = lista[id]
     res.send(item)
   })
+
+// Sinalizando para o express que estamos usando o JSON no Body
+
+app.use(express.json())
+
+// Endpoint Creat [POST] /personagem
+  app.post('/personagem', function (req, res) {
+
+    // Acessamos o Body da requisição
+
+    const body = req.body
+
+    // Acessamos a propriedade 'nome' do boddy
+
+    const novoItem = body.nome
+
+    // Adicionamos a lista
+
+    lista.push(novoItem)
+
+    // Exibimos a mensagem de sucesso
+
+    res.send('Item adicionado com sucesso: ' + novoItem)
+    // Afuunção send não permite a separação utilizando a virgula, por isso foi usado o +
+  })
 app.listen(3000)
