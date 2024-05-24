@@ -2,7 +2,9 @@ const express = require('express')
 const app = express()
 
 app.get('/', function (req, res) {
+
   res.send('Hello World')
+
 })
 
 const lista = ['Java','Kotlin','Android']
@@ -10,17 +12,24 @@ const lista = ['Java','Kotlin','Android']
 // Endpoint Read All [GET] / personagem/
 
 app.get('/personagem', function (req, res) {
+
     res.send(lista)
+
   })
 
 
 // Endpoint Read By ID [GET]/personagem/:id
 
 app.get('/personagem/:id', function (req, res) {
+
     // Acessamos o o parÂmetro de rota ID
+
     const id = req.params.id
+
     // Acessa o item na lista usando o ID - 1
-    const item = lista[id]
+
+    const item = lista[id - 1]
+
     res.send(item)
   })
 
@@ -29,23 +38,51 @@ app.get('/personagem/:id', function (req, res) {
 app.use(express.json())
 
 // Endpoint Creat [POST] /personagem
-  app.post('/personagem', function (req, res) {
 
-    // Acessamos o Body da requisição
+app.post('/personagem', function (req, res) {
 
-    const body = req.body
+  // Acessamos o Body da requisição
 
-    // Acessamos a propriedade 'nome' do boddy
+   const body = req.body
 
-    const novoItem = body.nome
+  // Acessamos a propriedade 'nome' do boddy
 
-    // Adicionamos a lista
+  const novoItem = body.nome
 
-    lista.push(novoItem)
+  // Adicionamos a lista
 
-    // Exibimos a mensagem de sucesso
+  lista.push(novoItem)
 
-    res.send('Item adicionado com sucesso: ' + novoItem)
-    // Afuunção send não permite a separação utilizando a virgula, por isso foi usado o +
-  })
+  // Exibimos a mensagem de sucesso
+
+  res.send('Item adicionado com sucesso: ' + novoItem)
+
+  // Afunção send não permite a separação utilizando a virgula, por isso foi usado o +
+})
+
+// Endpoint Update [PUT] / personagem/:id
+
+app.put('/personagem/:id', function(req, res){
+
+  // Acessamos o ID dos parametros de rota
+
+  const id = req.params.id
+
+  // Acessamos o body da requisição
+
+  const body = req.body
+
+  // Acessamos a propriedade 'nome' do body
+
+  const novoItem = body.nome
+
+  // Atualizamos na lista o novoItem pelo ID - 1
+
+  lista[id - 1] = novoItem
+  // a estrutura const item = lista[id - 1] acessa a informação, enquanto a lista[id - 1] = novo item serve pra definir o valor dele
+
+  // Enviamos uma mensagem de sucesso
+
+  res.send('Item atualizado com sucesso: ' + id + ' - ' + novoItem)
+})
 app.listen(3000)
