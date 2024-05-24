@@ -50,6 +50,17 @@ app.post('/personagem', function (req, res) {
 
   const novoItem = body.nome
 
+  // checar se o 'nome' está presente no body
+  if (!novoItem){
+    return res.send('Corpo da requisição deve conter a propriedade`nome`.')
+  }
+
+  // Checar se o novo item está na lista ou não
+  if (lista.includes(novoItem)){
+
+    return res.send('Esse item já existe na lista')
+  }
+
   // Adicionamos a lista
 
   lista.push(novoItem)
@@ -76,6 +87,19 @@ app.put('/personagem/:id', function(req, res){
   // Acessamos a propriedade 'nome' do body
 
   const novoItem = body.nome
+
+  
+  // checar se o 'nome' está presente no body
+  if (!novoItem){
+    return res.send('Corpo da requisição deve conter a propriedade`nome`.')
+  }
+
+  // Checar se o novo item está na lista ou não
+  if (lista.includes(novoItem)){
+
+    return res.send('Esse item já existe na lista')
+  }
+
 
   // Atualizamos na lista o novoItem pelo ID - 1
 
