@@ -13,7 +13,8 @@ const lista = ['Java','Kotlin','Android']
 
 app.get('/personagem', function (req, res) {
 
-    res.send(lista)
+    res.send(lista.filter(Boolean))
+    // A função filter(Boolean) serve para corrigir as situações onde um item da lista é removido, para que ao inves de aparecer null, não apareça nada e o length apareça correto
 
   })
 
@@ -84,5 +85,22 @@ app.put('/personagem/:id', function(req, res){
   // Enviamos uma mensagem de sucesso
 
   res.send('Item atualizado com sucesso: ' + id + ' - ' + novoItem)
+})
+
+// Endpoint Delete [DELETE] /personagem/:id
+app.delete('/personagem/:id', function(req, res){
+
+  // Acessamos o parametro de rota
+
+  const id = req.params.id
+
+  // Remover o item da lista usando o ID -1
+
+  delete lista[id - 1]
+
+  // Enviamos uma mensagem de sucesso
+
+  res.send('Item removido com sucesso: ' + id)
+
 })
 app.listen(3000)
